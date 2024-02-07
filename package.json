@@ -12,5 +12,8 @@
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "vue": "^3.4.15"
+  },
+  "devDependencies": {
+    "sass": "^1.70.0"
   }
 }

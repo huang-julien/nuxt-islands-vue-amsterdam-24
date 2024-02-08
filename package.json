@@ -8,12 +8,23 @@
     "export": "slidev export"
   },
   "dependencies": {
-    "@slidev/cli": "^0.47.4",
+    "@iconify-json/material-symbols": "^1.1.72",
+    "@slidev/cli": "0.43.6",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "vue": "^3.4.15"
   },
   "devDependencies": {
+    "@iconify-json/devicon": "^1.1.15",
+    "@iconify-json/fluent-mdl2": "^1.1.6",
+    "@iconify-json/guidance": "^1.1.6",
+    "@iconify-json/icon-park-solid": "^1.1.14",
+    "@iconify-json/logos": "^1.1.41",
+    "@iconify-json/mdi": "^1.1.54",
+    "@iconify-json/prime": "^1.1.10",
+    "@iconify-json/ri": "^1.1.17",
+    "@iconify-json/streamline": "^1.1.8",
+    "@iconify-json/uim": "^1.1.9",
     "sass": "^1.70.0"
   }
 }

@@ -23,6 +23,7 @@
     "@iconify-json/mdi": "^1.1.54",
     "@iconify-json/prime": "^1.1.10",
     "@iconify-json/ri": "^1.1.17",
+    "@iconify-json/skill-icons": "^1.1.7",
     "@iconify-json/streamline": "^1.1.8",
     "@iconify-json/uim": "^1.1.9",
     "sass": "^1.70.0"

@@ -1,16 +1,19 @@
 <template>
-    <div class="slidev-layout">
+    <div class="slidev-layout grid">
+      <div v-if="$slots.title" class="mb-4">
+        <slot name="title" />
+      </div>
       <div
-        class="flex h-full"
+        class="flex "
         :class="$attrs.reverse ? 'gap-16' : 'gap-8'"
       >
         <div
-          class="pr-16 flex flex-col"
+          class="pr-16 flex flex-col max-h-full"
           :class="[{ 'order-1': $attrs.reverse }, contentWrapperClass]"
         >
           <slot  />
         </div>
-        <figure class="relative flex flex-col justify-center" :class="imgWrapperClass">
+        <figure class="relative" :class="imgWrapperClass">
           <img
             :src="media"
             class="rounded-lg shadow-lg object-cover z-10"

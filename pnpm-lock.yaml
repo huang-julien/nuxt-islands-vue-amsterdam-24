@@ -46,6 +46,9 @@ devDependencies:
   '@iconify-json/ri':
     specifier: ^1.1.17
     version: 1.1.19
+  '@iconify-json/skill-icons':
+    specifier: ^1.1.7
+    version: 1.1.7
   '@iconify-json/streamline':
     specifier: ^1.1.8
     version: 1.1.8
@@ -649,6 +652,12 @@ packages:
 
   /@iconify-json/ri@1.1.19:
     resolution: {integrity: sha512-S9usTucQOY//J3LGIGZ+A6i8AYGCStDcLKjmWzI2UPnWJo+Xd5dESMQGkhOI5BlG3W4AtH6RmiXcpbPy3krmjQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/skill-icons@1.1.7:
+    resolution: {integrity: sha512-nN2Cb7B2oMJnwLnG8ZY/l/kKQqrSEQXZmHPpLtqDL7uDw4+4sqgGB+LxjDLFGvXY5HVe538sv3PJikPfMnxesg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

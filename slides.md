@@ -33,6 +33,7 @@ img-class: "!rounded-full border-4 border-solid border-gold"
 <div class="mt-15" />
 
 Other hobbies
+- Playing A LOT of video games <emojione-v1-keyboard-and-mouse />
 - Practicing flute and piano <material-symbols-music-note/> 
 - working out <guidance-weightlifting/>
 
@@ -345,6 +346,8 @@ Nuxt `3.7`
 Nuxt `3.8`
 ::
 
+<div class="mt-10" />
+
 ::window{filename="components/Content.server.vue"}
 
 ```vue
@@ -376,9 +379,74 @@ if (!page.value) {
 
 # Global client components
 
+::Badge{type="success"}
+Nuxt `3.11`
+::
+<div class="mt-10" />
+
+<div class="grid grid-cols-2 gap-4">
+<div>
+
+::Window{filename="nuxt.config.ts"}
+```ts
+export default defineNuxtConfig({
+  experimental: {
+    componentIsland: {
+      selectiveClient: 'deep'
+    }
+  }
+})
+```
+::
+
+</div>
+
+<div>
+<img src="/assets/globalcomponents.png" class="w-3/4" >
+
+
+- `nuxt-client` becomes a reserved attribute
+- Declare component as loadable client-side anywhere
+
+</div>
+</div>
+
 ---
 
 # Island pages
+::Badge{type="success"}
+Nuxt `3.11`
+::
+
+<div class="mt-10">
+
+::Window{filename="pages/index.server.vue"}
+```vue
+<template>
+  <div>
+    <UPageBody prose>
+      <ContentRenderer :value="page" />
+    </UPageBody>  
+  </div>
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+  island: true
+})
+
+const { data: page } = await useAsyncData(props.path, () => queryContent(props.path).findOne())
+if (!page.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+}
+</script>
+```
+::
+
+
+</div>
+
+
 
 ---
 

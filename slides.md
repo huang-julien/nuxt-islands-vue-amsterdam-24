@@ -17,11 +17,19 @@ transition: fade
 
 # Ship less javascript with NuxtIsland
 
+<!--
+
+Hello !
+So happy to be here today, it's actuelly my first time in Amsterdam and in such a a big conference. So glad to meet you all. 
+Many of you probably don't know who I am so, I should start to introduce myself.
+
+-->
+
 ---
 layout: text-image
-media: https://avatars.githubusercontent.com/u/63512348?v=4
 content-wrapper-class: w-3/4
 img-class: "!rounded-full border-4 border-solid border-gold"
+media: /assets/profile.jpg
 ---
 
 # Julien Huang
@@ -33,19 +41,22 @@ img-class: "!rounded-full border-4 border-solid border-gold"
 <div class="mt-15" />
 
 Other hobbies
-- Playing A LOT of video games <emojione-v1-keyboard-and-mouse />
+- Playing to A LOT of video games <emojione-v1-keyboard-and-mouse />
 - Practicing flute and piano <material-symbols-music-note/> 
 - working out <guidance-weightlifting/>
 
----
-layout: with-title
-title: Story about server components
----
 
-# Before single page application
+<!--
 
-- <mdi-server />  Everything was rendered by the server
-- <ph-link-bold /> Very tight relationship between frontend and backend
+My name is Julien. I’m currently working as a frontend developer at Leetchi in France and I’m also a nuxt core team member since last month and i was a nuxt insider since a year.
+
+Just a bit about myself, I started to learn web developement after the covid lockdown in France, so i’m a developer since… like 3 year and a half; Soon 4.
+
+In addition to my job as a Frontend developer, I also enjoy contributing to open-source projects (mainly nuxt), and I have been doing so for nearly two years. Aside from my interest in open-source, I also enjoy practicing the piano and flute, as well as working out and I also love playing video games.
+
+So within the Nuxt Core repository, I’ve been working a lot on Nuxt island since over a year and i’d like to share with you what nuxt island is, why does it exist and  how does it works, maybe if we have enough time, i can probably show you a small demo.
+
+-->
 
 ---
 layout: text-image
@@ -59,6 +70,16 @@ imgWrapperClass: w-1/2
 
 ::default::
 
+<v-click hide>
+
+::TitleOverlay
+
+# A story about server components
+
+::
+
+</v-click>
+
 - Untied frontend from backend
 - Frontend become much more flexible
 - Great level of interactivity
@@ -67,9 +88,19 @@ imgWrapperClass: w-1/2
 
 - Everything was pushed client-side
 
+<!--
+let’s start with a story of server only components
+
+Today, most of you may have heard a lot about islands components and server components in the web developement. In facts, it is becoming more and more common today for web developers. Especially for nextJS developer since it is now default.
+
+So... with the rise of SPA, we uncoupled comletly the frontend and backend, it made frontend much more flexible, brought a great level of interactivity for users and also a better user experience. 
+
+Thing is that many began to push everything server side, including data-fetching
+-->
+
 ---
 layout: text-image
-media: /assets/the_rising_of_metaframeworks.jpg
+media: /assets/stronks-metaframeworks.jpg
 imgWrapperClass: w-1/2
 reverse: true
 ---
@@ -87,6 +118,17 @@ reverse: true
 
 - Applications are becoming even more complex
 
+<!--
+and lastly theses last years we had the rising (not of the shield hero) but of meta-frameworks which comes to recouple frontend and backend for the initial request. most of them like nuxt aims to bring a way to easily handle SSR for developers andlike bringing a whole level of abstraction and convention much more to improve the productivity. 
+
+The only isssue is that the complexity of your application will increase even further because you have know 2 context, one server and one client.
+
+If we think about nuxt, we have a server that renders application and components server side. When you mount it client-side, we must import all javascript that has been used server side to render the first state of your app. 
+
+This is explained by the process of hydration
+
+-->
+
 ---
 layout: with-title
 title: Hydration
@@ -97,13 +139,48 @@ title: Hydration
 Hydration is the process by which frameworks initialize an application on top of server-rendered HTML.
 
 
-<img src="/assets/vue-hydration.jpg" class="w-1/2 mx-auto rounded-xl" />
+<img src="/assets/hydrate-now.jpg" class="w-1/3 mx-auto rounded-xl" />
+
+<!--
+
+As explained by Alex this morning, 
+
+ 
+
+Hydration is the process by which frameworks initialize an application on top of html that is already rendered.
+Most server-side rendered (SSR) app require hydrating the received HTML before mounting the app client-sid  to have the same state of render as the SSR app and so to attach every listeners to the DOM element.
+-->
 
 ---
 
 # How does it work ?
 
-<img src="/assets/hydration-flow.png" class="rounded-xl mt-20" >
+<HydrationFlow  class="my-10" />
+
+## At Hydration step
+
+- Mount each components
+- When mounting, Vue will perform a comarison between the vnode and the DOM element
+
+<!--
+
+When your browser request a page to your server, an application will be initialized server side to generate your HTML. Nuxt will then generate and send the HTML. Then your browser receive it and will load the javascript files linked within it.
+
+Vue will then mount on the rendered HTML. And when it renders your component, it will perform a comparison between the VNodes that your component has rendered and the current DOM.
+
+if there’s a mismatch, vue will try to rerender the mismatched part once again or sometime the whole app but this can leads to bugs we should avoid it for performance reason because interactivity for your users will be delayed.
+
+Since vue needs to initialize your app again client-side, this means that a lot of your code will be run twice (once server side, once client side) and needs to load a lot of javascript.
+
+When your browser request a page to your server, an application will be initialized server side to generate your HTML. Nuxt will then generate and send the HTML. Then your browser receive it and will load the javascript files linked within it.
+
+Vue will then mount on the rendered HTML. And when it renders your component, it will perform a comparison between the VNodes that your component has rendered and the current DOM.
+
+if there’s a mismatch, vue will try to rerender the mismatched part once again or sometime the whole app but this can leads to bugs we should avoid it for performance reason because interactivity for your users will be delayed.
+
+Since vue needs to initialize your app again client-side, this means that a lot of your code will be run twice (once server side, once client side) and needs to load a lot of javascript.
+
+-->
 
 ---
 
@@ -114,6 +191,10 @@ Hydration is the process by which frameworks initialize an application on top of
 - render the result as static HTML
 - non-interactive by default
 
+<!--
+So server only components are here to save your day. The idea is to have components that is rendered server side and then sent to the browser any formformat. Then either the framework or a component will handle the rendering of the result component without loading it’s javascript. Meaning your won’t have interactity with it.
+
+-->
 ---
 
 # Some example of Island and server components
@@ -133,6 +214,17 @@ Hydration is the process by which frameworks initialize an application on top of
 </div>
 
 </div>
+
+<!--
+In the world of react, they release RSC since 2020. They are using an ast streamed and provided by the server to describe the Virtual node tree.
+
+We do have something quite equivalent in Nuxt called Nuxt island. It basically render static html and bypass hydration.
+
+For those who tried Astro, Nuxt Island is basically the reverse thing. 
+
+Astro islands are small portions of interactivity within static html, Nuxt Islands are portions of static html within a single page application
+
+-->
 
 ---
 layout: with-title
@@ -171,12 +263,13 @@ setResponseHeader(ssrContext.event, 'hello', 'VueAmsterdam !')
 
 ---
 layout: with-title
-title: Drawbacks
+title: Specificities
 ---
-# Nuxt islands does have some drawbacks
+# Nuxt islands does have some specificities
 
 - No client code 
 - Your app instance is not linked to the island component
+- At the moment, only SFC can be converted to island
 
 <img src="/assets/island-ssr-flow.png" class="rounded-xl w-3/4 mx-auto" >
 
@@ -285,7 +378,7 @@ defineProps<{
 ::Window
 ```vue
 <template>
-  <NuxtIsland name="Counter" :props="{ multiplier: 5, count: 1 }" />
+  <Counter />
 </template>
 
 <script setup lang="ts">
@@ -299,25 +392,39 @@ defineProps<{
 layout: with-title
 title: What really happens ?
 ---
-## SSR/Client-side:
+
+Nuxt exposes an endpoint which starts by `/__nuxt_island`
+
+`<NuxtIsland>` is responsible for making fetch request and
+
+<v-click>
+
+## In you "main" nuxt app:
 - `<NuxtIsland>` makes a fetch request to the Nuxt Server
 
 <div class="mt-5" />
+
+</v-click>
+<v-click>
 
 ## Server side :
 - Request will go through the nitro renderer event handler
 - A Nuxt instance and Vue app will be created which only render the component
 - The handler construct the response and send it back as JSON
 
+</v-click>
 <div class="mt-5" />
+<v-click>
 
-## Client side:
-- Receive, read and cache the response
+## In you "main" nuxt app:
+- `<NuxtIsland>` Receive, read and cache the response
 - Render the html as static Vnode
+
+</v-click>
 
 ---
 layout: with-title
-title: "What does NuxtIsland provides ?"
+title: "What does features NuxtIsland provides ?"
 ---
 
 # Full support for slots and scoped slots
@@ -336,7 +443,33 @@ Nuxt `3.5`
 Nuxt `3.7`
 ::
 
-<img src="/assets/remote-island.png" class="w-1/2 mx-auto mt-5" >
+<TwoCols class="gap-5">
+
+<img src="/assets/remote-island.png" class="mx-auto mt-5" >
+
+<v-click>
+
+::Window
+```ts
+interface NuxtIslandResponse {
+  id?: string
+  html: string
+  state: Record<string, any>
+  head: {
+    link: (Record<string, string>)[]
+    style: ({ innerHTML: string, key: string })[]
+  }
+  props?: Record<string, Record<string, any>>
+  components?: Record<string, NuxtIslandClientResponse>
+  slots?: Record<string, NuxtIslandSlotResponse>
+}
+```
+::
+
+</v-click>
+
+</TwoCols>
+
 
 ---
 
@@ -347,6 +480,20 @@ Nuxt `3.8`
 ::
 
 <div class="mt-10" />
+
+<div class="grid grid-cols-2 gap-5">
+
+::Window{filename="nuxt.config.ts"}
+```ts
+export default defineNuxtConfig({
+  experimental: {
+    componentIsland: {
+      selectiveClient: true
+    }
+  }
+})
+```
+::
 
 ::window{filename="components/Content.server.vue"}
 
@@ -374,6 +521,7 @@ if (!page.value) {
 ```
 
 ::
+</div>
 
 ---
 
@@ -449,4 +597,14 @@ if (!page.value) {
 
 
 ---
+layout: with-title
+title: What next ?
+---
 
+<v-clicks>
+
+# `<ServerOnly>` component
+
+# Allow slots within non SFC components
+
+</v-clicks>

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@iconify-json/material-symbols": "^1.1.72",
-    "@slidev/cli": "0.43.6",
+    "@slidev/cli": "0.43.15",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "vue": "^3.4.15"

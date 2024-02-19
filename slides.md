@@ -172,13 +172,7 @@ if there’s a mismatch, vue will try to rerender the mismatched part once again
 
 Since vue needs to initialize your app again client-side, this means that a lot of your code will be run twice (once server side, once client side) and needs to load a lot of javascript.
 
-When your browser request a page to your server, an application will be initialized server side to generate your HTML. Nuxt will then generate and send the HTML. Then your browser receive it and will load the javascript files linked within it.
-
-Vue will then mount on the rendered HTML. And when it renders your component, it will perform a comparison between the VNodes that your component has rendered and the current DOM.
-
-if there’s a mismatch, vue will try to rerender the mismatched part once again or sometime the whole app but this can leads to bugs we should avoid it for performance reason because interactivity for your users will be delayed.
-
-Since vue needs to initialize your app again client-side, this means that a lot of your code will be run twice (once server side, once client side) and needs to load a lot of javascript.
+So sometimes we create components that are very heaving in terms of bundle for rendering but not interactive nor dynamic at all, in any context of their usages, and this is especially true when using things like CMS which often only renders static content. 
 
 -->
 
@@ -192,7 +186,9 @@ Since vue needs to initialize your app again client-side, this means that a lot 
 - non-interactive by default
 
 <!--
-So server only components are here to save your day. The idea is to have components that is rendered server side and then sent to the browser any formformat. Then either the framework or a component will handle the rendering of the result component without loading it’s javascript. Meaning your won’t have interactity with it.
+
+So server only components are here to save your day. 
+The idea is to have components that is rendered server side and then sent to the browser any formformat. Then either the framework or a component will handle the rendering of the result component without loading it’s javascript. Meaning your won’t have interactity with it.
 
 -->
 ---
@@ -236,7 +232,7 @@ title: Benefits
 - only run server-side
 - safe access to private configuration without risking leaks
 
-::window
+::window{filename="comonents/YourIsland.vue"}
 
 ```vue
 <template>
@@ -254,24 +250,55 @@ setResponseHeader(ssrContext.event, 'hello', 'VueAmsterdam !')
 
 ::
 
+<!--
+So what are the benefits of using it ?
+
+First, you can safely write server only code within your component, since it it run only server-side. 
+On nuxt it means that you have access to anything that is supposed to be server-side including thing such as a database access or  all your private runtime config;
+ Of course this means that you won’t have any access to anything that is related to a client environement, you can't do any client side actions and any client side hooks such as `onMounted`
+
+-->
+
 ---
 
 # Avoid shipping javascript chunks to your client !
 
 <img src="/assets/islands-chunk.jpg" class="w-1/2 mx-auto" >
 
+<!--
+
+And the main benefits is to avoid shipping  chunks of javascript to your browser.
+
+Because everything it only rendered server side and we don't make it interactive, no javascript chunk will be imported. 
+
+If we take the example of some headless CMS such as prismic which Lucie also from the core team is maintaining the nuxt module for it. 
+
+-->
+
 
 ---
 layout: with-title
 title: Specificities
 ---
-# Nuxt islands does have some specificities
 
-- No client code 
+# Nuxt islands have some.... specificities
+
+- At the moment, some islands features such as slots support are only available with SFC
 - Your app instance is not linked to the island component
-- At the moment, only SFC can be converted to island
 
 <img src="/assets/island-ssr-flow.png" class="rounded-xl w-3/4 mx-auto" >
+
+<!--
+
+NuxtIsland does have some other specifities...
+
+First, some nuxt-island features such as slots or client components which will be explained later are only available with SFC.
+
+and second, an island component is completly isolated from your "main" nuxt app instance. It means that your island component is not able to have any impact such as modifying injected variables, useState data or accessing to your main app plugin.
+
+And i'll show you a bit later why
+
+-->
 
 ---
 layout:  with-title
@@ -292,12 +319,30 @@ export default defineNuxtConfig({
 ```
 ::
 
+<!--
+
+Let's see how to use nuxt island
+
+First  you have to enable the feature within your nuxt configuration.
+
+To enable it you have to set `experimental.componentIsland` to true.
+-->
+
 ---
 
 # Two ways of using islands
 
 - `<NuxtIsland>` component
 - server components
+
+<!--
+
+There actually two ways of using island
+
+first with the <nuxtIsland> component 
+and then with server components
+
+-->
 
 ---
 
@@ -346,12 +391,22 @@ defineProps<{
 
 </div>
 
+<!--
+
+Let's starts with the nuxt island component.
+
+So the NuxtIsland component is a Low level way of using island components.
+
+Everything within the components/island directory will be registered as island. Or if you are a module author or if you just want to use nuxt hook or the `addComponent` from nuxt/kit, just set the island field to true when declaring your component.
+
+-->
+
 ---
 
 # Server components
 
 - Higher level
-- use `.server.vue` suffix in your component name
+- use `.server.vue` suffix in your component name or set `mode` to `server`
 - used as a "normal" component
 
 <div class="grid grid-cols-2 gap-2">
@@ -378,7 +433,8 @@ defineProps<{
 ::Window
 ```vue
 <template>
-  <Counter />
+  <!-- this is server only !-->
+  <Counter :count="3" :multiplier="5" />
 </template>
 
 <script setup lang="ts">
@@ -387,6 +443,18 @@ defineProps<{
 ::
 
 </div>
+
+<!--
+
+And then we have Server components.
+
+These are a higher level of island components, in reality it's a simple wrapper around NuxtIsland.
+
+When you have a server component, to call it, you simply write it like any "normal" component 
+
+The main advantage of server components is that you'll keep all type inference from typescript such as props or slot and event data passed from scoped slots !
+
+-->
 
 ---
 layout: with-title
@@ -608,3 +676,12 @@ title: What next ?
 # Allow slots within non SFC components
 
 </v-clicks>
+
+
+---
+
+# Thank you ! ❤️
+
+<mdi-github /> huang-julien <br>
+
+<icon-park-twitter /> JulienHuang_dev

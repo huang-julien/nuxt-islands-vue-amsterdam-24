@@ -34,6 +34,9 @@ devDependencies:
   '@iconify-json/guidance':
     specifier: ^1.1.6
     version: 1.1.6
+  '@iconify-json/icon-park':
+    specifier: ^1.1.13
+    version: 1.1.13
   '@iconify-json/icon-park-solid':
     specifier: ^1.1.14
     version: 1.1.14
@@ -651,6 +654,12 @@ packages:
 
   /@iconify-json/icon-park-solid@1.1.14:
     resolution: {integrity: sha512-oXV3KoGjd6vyOArhhumrCAuvG9+1G4+FHQEy76WbnU6lDoir8jnkGyDxmMTfmz831eHCUXC/pqnS1Gr0TfEPUg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/icon-park@1.1.13:
+    resolution: {integrity: sha512-7AoB802JUeMwaJBRz1a+3PGfifxDiMiE+mVgbDPZLHgLaLq7WXslQCV0aDs8kQHF0SGIBUp7f8kKTHGUktuFtw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

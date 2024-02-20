@@ -667,19 +667,12 @@ if (!page.value) {
 </div>
 
 
-
----
-layout: with-title
-title: What next ?
 ---
 
-<v-clicks>
 
-# `<ServerOnly>` component
-
-# Allow slots within non SFC components
-
-</v-clicks>
+- Nuxt island components and pages are not planned to be default
+- Don't use islands for everything
+  - Sometimes, the rendered payload is heavier than your JS bundle
 
 
 ---

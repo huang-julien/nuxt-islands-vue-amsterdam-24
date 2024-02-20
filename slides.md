@@ -13,9 +13,13 @@ drawings:
 title: Welcome to Slidev
 mdc: true
 transition: fade
+layout: intro
 ---
 
+<img src="/assets/island_scene.svg" class="absolute z-10 bottom-0 top-20 left-10 right-10" >
+ 
 # Ship less javascript with NuxtIsland
+ 
 
 ---
 layout: text-image
@@ -97,7 +101,7 @@ title: Hydration
 Hydration is the process by which frameworks initialize an application on top of server-rendered HTML.
 
 
-<img src="/assets/vue-hydration.jpg" class="w-1/2 mx-auto rounded-xl" />
+<img src="/assets/finally.jpg" class="w-1/2 mx-auto rounded-xl" />
 
 ---
 

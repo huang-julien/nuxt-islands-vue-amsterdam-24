@@ -1,12 +1,15 @@
 
  <template>
     <div class="slidev-layout with-title">
-        <TitleOverlay v-click-hide>
-            <slot v-if="$slots.title" name="title" />
-            <template v-else>
-                <h1 class="text-5xl font-bold text-gold">{{ title }}</h1>
-            </template>
-        </TitleOverlay>
+        <Transition name="fade">
+            <TitleOverlay v-click-hide>
+                <slot v-if="$slots.title" name="title" />
+                <template v-else>
+                    <h1 class="text-5xl font-bold text-gold">{{ title }}</h1>
+                </template>
+            </TitleOverlay>
+        </Transition>
+        
 
         <slot />
     </div>

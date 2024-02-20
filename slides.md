@@ -668,13 +668,21 @@ if (!page.value) {
 
 
 ---
+layout: with-title
+title: "Some advices"
+---
 
+<v-clicks>
 
-- Nuxt island components and pages are not planned to be default
-- Don't use islands for everything
-  - Sometimes, the rendered payload is heavier than your JS bundle
+<p> Islands are not default and are not planned to be default</p>
+<p>Don't use islands everywhere and for everything</p>
+<p> Sometimes, the payload is even heavier than sending your bundle
+</p>
 
+</v-clicks>
 
+---
+layout: center
 ---
 
 # Thank you ! ❤️

@@ -467,8 +467,6 @@ title: What really happens ?
 
 Nuxt exposes an endpoint which starts by `/__nuxt_island`
 
-`<NuxtIsland>` is responsible for making fetch request and
-
 <v-click>
 
 ## In you "main" nuxt app:

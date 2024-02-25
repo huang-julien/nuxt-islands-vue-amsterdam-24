@@ -170,11 +170,13 @@ Most server-side rendered (SSR) app require hydrating the received HTML before m
 
 When your browser request a page to your server, an application will be initialized server side to generate your HTML. Nuxt will then generate and send the HTML. Then your browser receive it and will load the javascript files linked within it.
 
-Vue will then mount on the rendered HTML. And when it renders your component, it will perform a comparison between the VNodes that your component has rendered and the current DOM.
+So hydration means in reality initializing your application twice. 
+- once server-side
+- once client-side
+
+When Vue mount on your rendered HTML. At component rendering step, it will perform a comparison between the VNodes that your components render function has returned and the current DOM.
 
 if there’s a mismatch, vue will try to rerender the mismatched part once again or sometime the whole app but this can leads to bugs we should avoid it for performance reason because interactivity for your users will be delayed.
-
-Since vue needs to initialize your app again client-side, this means that a lot of your code will be run twice (once server side, once client side) and needs to load a lot of javascript.
 
 So sometimes we create components that are very heaving in terms of bundle for rendering but not interactive nor dynamic at all, in any context of their usages, and this is especially true when using things like CMS which often only renders static content. 
 
@@ -192,7 +194,7 @@ So sometimes we create components that are very heaving in terms of bundle for r
 <!--
 
 So server only components are here to save your day. 
-The idea is to have components that is rendered server side and then sent to the browser any formformat. Then either the framework or a component will handle the rendering of the result component without loading it’s javascript. Meaning your won’t have interactity with it.
+The idea is to have components that is rendered server side and then sent to the browser any formformat. Then either the framework or a component will handle the rendering of the result component without loading it’s javascript.
 
 -->
 ---
@@ -275,17 +277,18 @@ And the main benefits is to avoid shipping  chunks of javascript to your browser
 
 Because everything it only rendered server side and we don't make it interactive, no javascript chunk will be imported. 
 
-If we take the example of some headless CMS such as prismic which Lucie also from the core team is maintaining the nuxt module for it. 
+So the load time of your app will be reduced. And even the time for your app to be fully interactive can be reduced since at hydration step, vue will simply perform a quick comparison without 
+attaching any listeners
 
 -->
 
 
 ---
 layout: with-title
-title: Specificities
+title: Specificities of Nuxt islands
 ---
 
-# Nuxt islands have some.... specificities
+# Specificities of Nuxt islands
 
 - At the moment, some islands features such as slots support are only available with SFC
 - Your app instance is not linked to the island component
@@ -306,7 +309,7 @@ And i'll show you a bit later why
 
 ---
 layout:  with-title
-title: "How does it work ?"
+title: "How to use Nuxt islands ?"
 ---
 
 # Enable the feature

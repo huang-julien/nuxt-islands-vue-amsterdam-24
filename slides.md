@@ -99,7 +99,7 @@ Today, most of you may have heard a lot about islands components and server comp
 
 So... with the rise of SPA, we uncoupled comletly the frontend and backend, it made frontend much more flexible, brought a great level of interactivity for users and also a better user experience. 
 
-Thing is that many began to push everything server side, including data-fetching
+Even things that is supposed to be served by the server directly to the app such data from a databse
 -->
 
 ---
@@ -123,11 +123,12 @@ reverse: true
 - Applications are becoming even more complex
 
 <!--
-and lastly theses last years we had the rising (not of the shield hero) but of meta-frameworks which comes to recouple frontend and backend for the initial request. most of them like nuxt aims to bring a way to easily handle SSR for developers andlike bringing a whole level of abstraction and convention much more to improve the productivity. 
+and lastly theses last years we had the rising (not of the shield hero) but of meta-frameworks which comes to recouple frontend and backend for the initial request. most of them like nuxt aims to bring a way to easily handle server side rendering for developers and bring a whole new level of developer experience compared to the lower level of JS frameworks
 
 The only isssue is that the complexity of your application will increase even further because you have know 2 context, one server and one client.
 
-If we think about nuxt, we have a server that renders application and components server side. When you mount it client-side, we must import all javascript that has been used server side to render the first state of your app. 
+Now If we think about nuxt, we have a server that renders application and components server side. 
+When you mount it client-side, we must import all javascript that is needed to render the first state of your app. Even if it does not have any interactivity at all
 
 This is explained by the process of hydration
 
@@ -176,7 +177,7 @@ So hydration means in reality initializing your application twice.
 
 When Vue mount on your rendered HTML. At component rendering step, it will perform a comparison between the VNodes that your components render function has returned and the current DOM.
 
-if there’s a mismatch, vue will try to rerender the mismatched part once again or sometime the whole app but this can leads to bugs we should avoid it for performance reason because interactivity for your users will be delayed.
+if there’s a mismatch, vue will try to rerender the mismatched part once again or sometime the whole app but this can leads to bugs we should avoid it for performance reason because interactivity for your users will be delayed, there will be layout shift etc...
 
 So sometimes we create components that are very heaving in terms of bundle for rendering but not interactive nor dynamic at all, in any context of their usages, and this is especially true when using things like CMS which often only renders static content. 
 
@@ -218,13 +219,13 @@ The idea is to have components that is rendered server side and then sent to the
 </div>
 
 <!--
-In the world of react, they release RSC since 2020. They are using an ast streamed and provided by the server to describe the Virtual node tree.
+In the world of react, they release RSC since 2020. They are using an ast streamed by the server to describe the Virtual node tree.
 
-We do have something quite equivalent in Nuxt called Nuxt island. It basically render static html and bypass hydration.
+We do have something quite equivalent in Nuxt called Nuxt island which uses JSON response to render static html.
 
 For those who tried Astro, Nuxt Island is basically the reverse thing. 
 
-Astro islands are small portions of interactivity within static html, Nuxt Islands are portions of static html within a single page application
+Astro islands are small portions of interactive components within static html, Nuxt Islands are portions of static html within an interactive single page application
 
 -->
 
@@ -238,7 +239,7 @@ title: Benefits
 - only run server-side
 - safe access to private configuration without risking leaks
 
-::window{filename="comonents/YourIsland.vue"}
+::window{filename="components/island/YourIsland.vue"}
 
 ```vue
 <template>
@@ -299,7 +300,7 @@ title: Specificities of Nuxt islands
 
 NuxtIsland does have some other specifities...
 
-First, some nuxt-island features such as slots or client components which will be explained later are only available with SFC.
+First, some nuxt-island features such as slots or client components which will be explained later are only available with SFC because it need some file transformation that is only applied to SFC.
 
 and second, an island component is completly isolated from your "main" nuxt app instance. It means that your island component is not able to have any impact such as modifying injected variables, useState data or accessing to your main app plugin.
 
@@ -365,6 +366,7 @@ and then with server components
 ----| Counter.vue
 ```
 
+<v-click>
 
 <div class="grid grid-cols-2 gap-2">
 
@@ -398,6 +400,8 @@ defineProps<{
 
 </div>
 
+</v-click>
+
 <!--
 
 Let's starts with the nuxt island component.
@@ -415,6 +419,8 @@ Everything within the components/island directory will be registered as island. 
 - Higher level
 - use `.server.vue` suffix in your component name or set `mode` to `server`
 - used as a "normal" component
+
+<v-click>
 
 <div class="grid grid-cols-2 gap-2">
 
@@ -451,6 +457,8 @@ defineProps<{
 
 </div>
 
+</v-click>
+
 <!--
 
 And then we have Server components.
@@ -461,6 +469,8 @@ When you have a server component, to call it, you simply write it like any "norm
 
 The main advantage of server components is that you'll keep all type inference from typescript such as props or slot and event data passed from scoped slots !
 
+So this is something not available on nuxt islands, the name field for exemple is not typed...
+wait i'm pretty sure there's a way to do it, so i'll say "yet"
 -->
 
 ---
@@ -520,6 +530,24 @@ Nuxt `3.7`
 
 <img src="/assets/remote-island.png" class="mx-auto mt-5" >
 
+<div>
+
+<v-click>
+
+::Window{filename="nuxt.config.ts"}
+```ts
+export default defineNuxtConfig({
+  experimental: {
+    componentIslands: {
+      remote: true
+    }
+  }
+})
+```
+::
+
+</v-click>
+
 <v-click>
 
 ::Window
@@ -540,6 +568,9 @@ interface NuxtIslandResponse {
 ::
 
 </v-click>
+
+
+</div>
 
 </TwoCols>
 
@@ -652,10 +683,6 @@ Nuxt `3.11`
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  island: true
-})
-
 const { data: page } = await useAsyncData(props.path, () => queryContent(props.path).findOne())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })

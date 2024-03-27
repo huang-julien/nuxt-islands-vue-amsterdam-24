@@ -36,7 +36,7 @@ img-class: "!rounded-full border-4 border-solid border-gold"
 media: /assets/profile.jpg
 ---
 
-# Julien Huang
+# Hey 👋 I'm Julien Huang
  
 - ### Frontend developer at <LeetchiLogo class="h-6 text-[#f7c0b9] mb-1 inline" />
 - ### Open-source enthusiast
@@ -54,7 +54,7 @@ Other hobbies
 
 My name is Julien. I’m currently working as a frontend developer at Leetchi in France and I’m also a nuxt core team member since last month and i was a nuxt insider since a year.
 
-Just a bit about myself, I started to learn web developement after the covid lockdown in France, so i’m a developer since… like 3 year and a half; Soon 4.
+Just a bit about myself, I started to learn web developement after the covid lockdown in France, so i’m a developer since… like 3 year and a half; Soon 4. It's probably the best decision i've ever made
 
 In addition to my job as a Frontend developer, I also enjoy contributing to open-source projects (mainly nuxt), and I have been doing so for nearly two years. Aside from my interest in open-source, I also enjoy practicing the piano and flute, as well as working out and I also love playing video games.
 
@@ -128,7 +128,7 @@ and lastly theses last years we had the rising (not of the shield hero) but of m
 The only isssue is that the complexity of your application will increase even further because you have know 2 context, one server and one client.
 
 Now If we think about nuxt, we have a server that renders application and components server side. 
-When you mount it client-side, we must import all javascript that is needed to render the first state of your app. Even if it does not have any interactivity at all
+When you mount it client-side, we must import all javascript that is needed to render the first state of your app. Even if it does not have any interactivity at all and sometimes, this can be quite annoying. After all no interactivity i wouldn't want to load the whole javascript chunk of a component
 
 This is explained by the process of hydration
 
@@ -143,6 +143,7 @@ title: Hydration
 
 Hydration is the process by which frameworks initialize an application on top of server-rendered HTML.
 
+<img src="/assets/alex.png" class="absolute w-1/2 rotate-320 left-130" />
 
 <img src="/assets/finally.jpg" class="w-1/2 mx-auto rounded-xl" />
 
@@ -409,6 +410,7 @@ Let's starts with the nuxt island component.
 So the NuxtIsland component is a Low level way of using island components.
 
 Everything within the components/island directory will be registered as island. Or if you are a module author or if you just want to use nuxt hook or the `addComponent` from nuxt/kit, just set the island field to true when declaring your component.
+
 
 -->
 
